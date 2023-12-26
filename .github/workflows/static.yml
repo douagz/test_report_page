@@ -32,6 +32,14 @@ jobs:
         python-version: ["3.10"]
 
     steps:
+    - name: Configure Git
+      env: 
+        GIT_USERNAME: ${{secrets.NAME}}
+        GIT_EMAIL: ${{secrets.EMAIL}}
+      run: | 
+        git config --global user.name ${GIT_USERNAME}
+        git config --global user.email ${GIT_EMAIL}
+        
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
@@ -62,6 +70,12 @@ jobs:
         export PATH=$PATH:/usr/local/allure-2.25.0/bin
         allure generate $AllureResult -o $AllureReport --clean
         ls $AllureReport
+        
+    - name: add commit push
+      run: | 
+        git add ./AllureReport
+        git commit --message 'Update the report folder'
+        git push origin main
         
   deploy:
     environment:
