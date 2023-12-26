@@ -1,0 +1,86 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  test-baidu-report:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        playwright install
+    - name: Install Allure
+      run: |
+        sudo apt-get install wget
+        #wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.21.0/allure-commandline-2.21.0.zip
+        wget https://github.com/allure-framework/allure2/releases/download/2.25.0/allure-2.25.0.tgz
+        tar -zxvf allure-2.25.0.tgz
+        sudo cp -r ./allure-2.25.0 /usr/local/
+        export PATH=$PATH:/usr/local/allure-2.25.0/bin
+        source /etc/profile
+        allure --version
+        
+    - name: Test with pytest
+      env:
+        AllureResult: '/home/runner/work/Playwright_Allure/Playwright_Allure/report/AllureResult'
+        AllureReport: '/home/runner/work/Playwright_Allure/Playwright_Allure/report/AllureReport'
+      #uses: actions4git/add-commit-push@v1
+      run: |
+        pytest -vs --alluredir=$AllureResult --clean-alluredir tests
+        ls $AllureResult
+        export PATH=$PATH:/usr/local/allure-2.25.0/bin
+        allure generate $AllureResult -o $AllureReport --clean
+        ls $AllureReport
+        pwd
+        
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
