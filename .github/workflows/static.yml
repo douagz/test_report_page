@@ -45,7 +45,6 @@ jobs:
     - name: Install Allure
       run: |
         sudo apt-get install wget
-        #wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.21.0/allure-commandline-2.21.0.zip
         wget https://github.com/allure-framework/allure2/releases/download/2.25.0/allure-2.25.0.tgz
         tar -zxvf allure-2.25.0.tgz
         sudo cp -r ./allure-2.25.0 /usr/local/
@@ -55,16 +54,14 @@ jobs:
         
     - name: Test with pytest
       env:
-        AllureResult: '/home/runner/work/Playwright_Allure/Playwright_Allure/report/AllureResult'
-        AllureReport: '/home/runner/work/Playwright_Allure/Playwright_Allure/report/AllureReport'
-      #uses: actions4git/add-commit-push@v1
+        AllureResult: '/home/runner/work/test_report_page/test_report_page/AllureResult'
+        AllureReport: '/home/runner/work/test_report_page/test_report_page/AllureReport'
       run: |
         pytest -vs --alluredir=$AllureResult --clean-alluredir tests
         ls $AllureResult
         export PATH=$PATH:/usr/local/allure-2.25.0/bin
         allure generate $AllureResult -o $AllureReport --clean
         ls $AllureReport
-        pwd
         
   deploy:
     environment:
@@ -80,7 +77,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: '.'
+          path: './AllureReport'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
