@@ -24,9 +24,9 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   test-baidu-report:
-    #environment:
-    #  name: github-pages
-    #  url: ${{ steps.deployment.outputs.page_url }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -84,19 +84,22 @@ jobs:
       uses: actions/upload-pages-artifact@v2
       with:
         path: "."        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4 
     #- name: add commit push
     #  run: | 
     #    git add .
     #    git commit --message 'Update the report folder'
     #    git push origin main
         
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: test-baidu-report
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+#  deploy:
+#    environment:
+#      name: github-pages
+#      url: ${{ steps.deployment.outputs.page_url }}
+#    runs-on: ubuntu-latest
+#    needs: test-baidu-report
+#    steps:
+#      - name: Deploy to GitHub Pages
+#        id: deployment
+#        uses: actions/deploy-pages@v4
