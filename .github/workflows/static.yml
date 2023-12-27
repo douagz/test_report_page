@@ -64,14 +64,15 @@ jobs:
         
     - name: Test with pytest
       env:
-        AllureResult: '/home/runner/work/test_report_page/test_report_page/AllureResult'
-        AllureReport: '/home/runner/work/test_report_page/test_report_page/'
+        AllureResult: './AllureResult'
+        AllureReport: '.'
       run: |
         pytest -vs --alluredir=$AllureResult --clean-alluredir AllureTest
         ls $AllureResult
         export PATH=$PATH:/usr/local/allure-2.25.0/bin
         allure generate $AllureResult -o $AllureReport --clean
         ls $AllureReport
+        pwd
         
     - name: Setup Pages
       uses: actions/configure-pages@v3
