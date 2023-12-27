@@ -65,7 +65,7 @@ jobs:
     - name: Test with pytest
       env:
         AllureResult: '/home/runner/work/test_report_page/test_report_page/AllureResult'
-        AllureReport: '/home/runner/work/test_report_page/test_report_page/AllureReport'
+        AllureReport: '/home/runner/work/test_report_page/test_report_page/'
       run: |
         pytest -vs --alluredir=$AllureResult --clean-alluredir AllureTest
         ls $AllureResult
