@@ -75,11 +75,11 @@ jobs:
         
     - name: Setup Pages
       uses: actions/configure-pages@v3
-    - name: Build
-      uses: actions/jekyll-build-pages@v1
-      with:
-        source: "./AllureReport"
-        destination: "./AllureReport"
+    #- name: Build
+    #  uses: actions/jekyll-build-pages@v1
+    #  with:
+    #    source: "./AllureReport"
+    #    destination: "./AllureReport"
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
