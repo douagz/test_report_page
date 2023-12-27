@@ -65,7 +65,7 @@ jobs:
     - name: Test with pytest
       env:
         AllureResult: '/home/runner/work/test_report_page/test_report_page/AllureResult'
-        AllureReport: '/home/runner/work/test_report_page/test_report_page/'
+        AllureReport: '/home/runner/work/test_report_page/test_report_page/AllureReport'
       run: |
         pytest -vs --alluredir=$AllureResult --clean-alluredir AllureTest
         ls $AllureResult
@@ -83,23 +83,23 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v2
       with:
-        path: "."        
+        path: "./AllureReport"        
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4 
-    #- name: add commit push
-    #  run: | 
-    #    git add .
-    #    git commit --message 'Update the report folder'
-    #    git push origin main
+    - name: add commit push
+      run: | 
+        git add --all
+        git commit --message 'Update the report folder'
+        git push origin main
         
-#  deploy:
-#    environment:
-#      name: github-pages
-#      url: ${{ steps.deployment.outputs.page_url }}
-#    runs-on: ubuntu-latest
-#    needs: test-baidu-report
-#    steps:
-#      - name: Deploy to GitHub Pages
-#        id: deployment
-#        uses: actions/deploy-pages@v4
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: test-baidu-report
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
