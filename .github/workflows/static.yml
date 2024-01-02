@@ -84,7 +84,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v2
       with:
-        path: "./AllureReport"        
+        path: "."        
 
    # - name: add commit push
    #   run: | 
