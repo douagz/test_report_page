@@ -84,14 +84,14 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v2
       with:
-        path: "."        
+        path: "./AllureReport"        
 
-    - name: add commit push
-      run: | 
-        git status
-        git add data export history plugins widgets app.js favicon.ico index.html styles.css
-        git commit --message 'Update the report folder'
-        git push origin main
+   # - name: add commit push
+   #   run: | 
+   #     git status
+   #     git add data export history plugins widgets app.js favicon.ico index.html styles.css
+   #     git commit --message 'Update the report folder'
+   #     git push origin main
         
     - name: Deploy to GitHub Pages
       id: deployment
