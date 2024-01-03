@@ -86,9 +86,10 @@ jobs:
       with:
         path: "."        
 
-   # - name: add commit push
-   #   run: | 
-   #     git status
+    - name: add commit push
+      run: | 
+        git status
+        git branch -a
    #     git add data export history plugins widgets app.js favicon.ico index.html styles.css
    #     git commit --message 'Update the report folder'
    #     git push origin main
