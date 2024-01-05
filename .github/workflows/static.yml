@@ -69,19 +69,14 @@ jobs:
         AllureReport: '.'
       run: |
         pytest -vs --alluredir=$AllureResult --clean-alluredir AllureTest
-        ls $AllureResult
+        ls 
         export PATH=$PATH:/usr/local/allure-2.25.0/bin
         allure generate $AllureResult -o $AllureReport --clean
         ls $AllureReport
-        pwd
         
     - name: Setup Pages
       uses: actions/configure-pages@v3
-    #- name: Build
-    #  uses: actions/jekyll-build-pages@v1
-    #  with:
-    #    source: "./AllureReport"
-    #    destination: "./AllureReport"
+
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v2
       with:
@@ -98,15 +93,3 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v3
-   #   with:
-   #     token: ${{ secrets.GITHUB_TOKEN }}
-#  deploy:
-#    environment:
-#      name: github-pages
-#      url: ${{ steps.deployment.outputs.page_url }}
-#    runs-on: ubuntu-latest
-#    needs: test-baidu-report
-#    steps:
-#      - name: Deploy to GitHub Pages
-#        id: deployment
-#        uses: actions/deploy-pages@v4
