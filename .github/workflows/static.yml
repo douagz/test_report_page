@@ -69,7 +69,9 @@ jobs:
         AllureReport: '.'
       run: |
         pytest -vs --alluredir=$AllureResult --clean-alluredir AllureTest
-        ls 
+        echo "Current directory is " $$ pwd
+        cd $AllureResult && echo "Current directory is AllureResult" && ls
+        cd $AllureReport && echo "Current directory is AllureReport" && ls
         export PATH=$PATH:/usr/local/allure-2.25.0/bin
         allure generate $AllureResult -o $AllureReport --clean
         ls $AllureReport
