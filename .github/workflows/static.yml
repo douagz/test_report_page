@@ -65,11 +65,11 @@ jobs:
         
     - name: Test with pytest
       env:
-        AllureResult: './AllureResult'
-        AllureReport: '.'
+        AllureResult: '/home/runner/work/test_report_page/test_report_page/AllureResult'
+        AllureReport: '/home/runner/work/test_report_page/test_report_page/AllureReport'
       run: |
         pytest -vs --alluredir=$AllureResult --clean-alluredir AllureTest
-        echo "Current directory is " $$ pwd
+        echo "Current directory is " && pwd
         cd $AllureResult && echo "Current directory is AllureResult" && ls
         cd $AllureReport && echo "Current directory is AllureReport" && ls
         export PATH=$PATH:/usr/local/allure-2.25.0/bin
