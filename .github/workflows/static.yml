@@ -84,13 +84,14 @@ jobs:
       with:
         path: "/home/runner/work/test_report_page/test_report_page/AllureReport"       
 
-   # - name: add commit push
-   #   run: | 
-   #     git branch -a
-   #     git status
-   #     git add data export history plugins widgets app.js favicon.ico index.html styles.css
-   #     git commit --message 'Update the report folder'
-   #     git push origin main
+    - name: add commit push
+      run: | 
+        cd /home/runner/work/test_report_page/test_report_page/ 
+        git status
+        git add ./AllureReport
+        #git add data export history plugins widgets app.js favicon.ico index.html styles.css
+        git commit --message 'Update the report folder'
+        git push origin main
         
     - name: Deploy to GitHub Pages
       id: deployment
