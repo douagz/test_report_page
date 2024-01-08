@@ -1,2 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Mon Jan 08 02:49:34 UTC 2024","Mon Jan 08 02:49:40 UTC 2024","6343","AllureTest","test_baidu","","","","test_baidu[chromium]",""
+"passed","Mon Jan 08 07:13:46 UTC 2024","Mon Jan 08 07:13:57 UTC 2024","10678","AllureTest","test_baidu","","","","test_baidu[chromium]",""
