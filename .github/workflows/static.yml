@@ -28,6 +28,9 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      #AllureResult: '/home/runner/work/test_report_page/test_report_page/AllureResult'
+      #AllureReport: '/home/runner/work/test_report_page/test_report_page/AllureReport'
+      #rootDir: 'home/runner/work/test_report_page/test_report/page'  
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -83,7 +86,7 @@ jobs:
       uses: actions/upload-pages-artifact@v2
       with:
         #path: "/home/runner/work/test_report_page/test_report_page/AllureReport"       
-        path: $AllureReport
+        path: "./AllureReport"
 
     - name: add commit push
       run: | 
